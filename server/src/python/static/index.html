@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Upload</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type=file] {
+            display: block;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+
+        progress {
+            width: 100%;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Upload Photos</h1>
+
+<p>Select either:</p>
+
+<ul>
+    <li>A single image (.jpg, .png, etc.)</li>
+    <li>A ZIP file containing images</li>
+</ul>
+
+<input id="fileInput" type="file"
+       accept=".zip,.jpg,.jpeg,.png,.gif,.bmp,.webp,.tif,.tiff">
+
+<button onclick="upload()">Upload</button>
+
+<br>
+
+<progress id="progress" max="100" value="0"></progress>
+
+<div id="status"></div>
+
+<script>
+
+async function upload() {
+
+    const input = document.getElementById("fileInput");
+    const status = document.getElementById("status");
+
+    if (input.files.length === 0) {
+        status.innerHTML = "Please choose a file.";
+        return;
+    }
+
+    const file = input.files[0];
+
+    const form = new FormData();
+    form.append("file", file);
+
+    status.innerHTML = "Uploading...";
+
+    try {
+
+        const response = await fetch("/pictures/", {
+            method: "PUT",
+            body: form
+        });
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        const json = await response.json();
+
+        status.innerHTML =
+            "Upload successful!\n\n" +
+            "Images in library: " + json.count;
+
+        input.value = "";
+
+    } catch (err) {
+        status.innerHTML = "Upload failed:\n\n" + err;
+    }
+
+}
+
+</script>
+
+</body>
+</html>
+
