@@ -1,10 +1,97 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <component name="MainScene" extends="Scene">
-  <script type="text/brightscript" uri="pkg:/source/main.brs" />
-  <children>
-    <Video
-      id="videoPlayer"
-      translation="[0,0]"
-    />
-  </children>
+    <script type="text/brightscript" uri="pkg:/components/MainScene.brs"/>
+
+    <children>
+        <Rectangle  width="1920"
+                    height="1080"
+                    color="0x000000FF"/>
+
+        <Poster id="posterA"
+                width="1920"
+                height="1080"
+                loadDisplayMode="scaleToFit"
+                opacity="1.0"/>
+
+        <Poster id="posterB"
+                width="1920"
+                height="1080"
+                loadDisplayMode="scaleToFit"
+                opacity="0.0"/>
+
+        <BusySpinner id="spinner"
+                     translation="[910,500]"
+                     visible="false"/>
+
+
+        <!-- The settings overlay -->
+        <Group id="settings"
+            visible="false">
+
+            <!-- Dim background -->
+            <Rectangle
+                width="1920"
+                height="1080"
+                color="0x000000C0"/>
+
+            <!-- Dialog -->
+            <Rectangle
+                translation="[260,160]"
+                width="1400"
+                height="760"
+                color="0x202020FF"/>
+
+            <Label
+                translation="[320,220]"
+                text="Roku Memories Settings"
+                font="font:LargeBoldSystemFont"/>
+
+            <Label
+                translation="[320,340]"
+                text="Server"/>
+
+            <Label
+                id="serverValue"
+                translation="[620,340]"/>
+
+            <Label
+                translation="[320,440]"
+                text="Delay"/>
+
+            <Label
+                id="delayValue"
+                translation="[620,440]"/>
+
+            <Label
+                translation="[320,620]"
+                text="OK=Save    Back=Cancel"/>
+        </Group>                     
+    </children>
+
+    <animations>
+        <Animation id="fadeAOut" duration="0.35">
+            <FloatFieldInterpolator fieldToInterp="posterA.opacity"
+                                    key="[0,1]"
+                                    keyValue="[1,0]"/>
+        </Animation>
+
+        <Animation id="fadeAIn" duration="0.35">
+            <FloatFieldInterpolator fieldToInterp="posterA.opacity"
+                                    key="[0,1]"
+                                    keyValue="[0,1]"/>
+        </Animation>
+
+        <Animation id="fadeBOut" duration="0.35">
+            <FloatFieldInterpolator fieldToInterp="posterB.opacity"
+                                    key="[0,1]"
+                                    keyValue="[1,0]"/>
+        </Animation>
+
+        <Animation id="fadeBIn" duration="0.35">
+            <FloatFieldInterpolator fieldToInterp="posterB.opacity"
+                                    key="[0,1]"
+                                    keyValue="[0,1]"/>
+        </Animation>
+    </animations>
+
 </component>

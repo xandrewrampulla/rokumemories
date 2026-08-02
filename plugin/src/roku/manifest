@@ -1,4 +1,4 @@
-title=Network Video Screensaver
+title=Roku Memories
 major_version=1
 minor_version=0
 build_version=00001
@@ -7,6 +7,6 @@ mm_icon_focus_hd=pkg:/images/iconsd.png
 ui_resolutions=hd
 
 # --- SCREENSAVER SUPPORT ---
-screensaver_title=Network Video Screensaver
+screensaver_title=Roku Memories
 screensaver_private=0
 screensaver_version=1.0
