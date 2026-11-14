@@ -1,97 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="MainScene" extends="Scene">
-    <script type="text/brightscript" uri="pkg:/components/MainScene.brs"/>
-
+    <interface>
+        <field id="configuration" type="assocarray" onChange="configurationChanged" />
+        <field id="settingsOnly" type="boolean" value="false" />
+        <field id="saveRequested" type="assocarray" alwaysNotify="true" />
+        <field id="saveResult" type="assocarray" onChange="settingsSaved" alwaysNotify="true" />
+        <field id="exitRequested" type="boolean" value="false" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/source/Configuration.brs" />
+    <script type="text/brightscript" uri="pkg:/components/Slideshow.brs" />
+    <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
     <children>
-        <Rectangle  width="1920"
-                    height="1080"
-                    color="0x000000FF"/>
-
-        <Poster id="posterA"
-                width="1920"
-                height="1080"
-                loadDisplayMode="scaleToFit"
-                opacity="1.0"/>
-
-        <Poster id="posterB"
-                width="1920"
-                height="1080"
-                loadDisplayMode="scaleToFit"
-                opacity="0.0"/>
-
-        <BusySpinner id="spinner"
-                     translation="[910,500]"
-                     visible="false"/>
-
-
-        <!-- The settings overlay -->
-        <Group id="settings"
-            visible="false">
-
-            <!-- Dim background -->
-            <Rectangle
-                width="1920"
-                height="1080"
-                color="0x000000C0"/>
-
-            <!-- Dialog -->
-            <Rectangle
-                translation="[260,160]"
-                width="1400"
-                height="760"
-                color="0x202020FF"/>
-
-            <Label
-                translation="[320,220]"
-                text="Roku Memories Settings"
-                font="font:LargeBoldSystemFont"/>
-
-            <Label
-                translation="[320,340]"
-                text="Server"/>
-
-            <Label
-                id="serverValue"
-                translation="[620,340]"/>
-
-            <Label
-                translation="[320,440]"
-                text="Delay"/>
-
-            <Label
-                id="delayValue"
-                translation="[620,440]"/>
-
-            <Label
-                translation="[320,620]"
-                text="OK=Save    Back=Cancel"/>
-        </Group>                     
+        <Rectangle width="1280" height="720" color="0x000000FF" />
+        <Poster id="posterA" width="1280" height="720" loadWidth="1280"
+                loadHeight="720" loadDisplayMode="scaleToFit" opacity="0" />
+        <Poster id="posterB" width="1280" height="720" loadWidth="1280"
+                loadHeight="720" loadDisplayMode="scaleToFit" opacity="0" />
+        <BusySpinner id="spinner" translation="[610,330]" visible="false" />
+        <Label id="status" translation="[160,260]" width="960" height="200"
+               horizAlign="center" vertAlign="center" wrap="true" />
+        <Timer id="slideTimer" repeat="false" duration="15" />
+        <Timer id="loadTimeout" repeat="false" duration="30" />
+        <Group id="settings" visible="false">
+            <Rectangle width="1280" height="720" color="0x000000C0" />
+            <Rectangle translation="[100,60]" width="1080" height="600" color="0x202020FF" />
+            <Label translation="[140,90]" text="Roku Memories Settings" font="font:LargeBoldSystemFont" />
+            <Label translation="[140,170]" text="Server:" />
+            <Label id="serverValue" translation="[280,170]" width="840" height="40" />
+            <Label translation="[140,220]" text="Delay:" />
+            <Label id="delayValue" translation="[280,220]" width="840" height="40" />
+            <LabelList id="settingsMenu" translation="[140,290]" itemSize="[960,56]"
+                       numRows="4" vertFocusAnimationStyle="floatingFocus">
+                <ContentNode role="content">
+                    <ContentNode title="Edit server URL" />
+                    <ContentNode title="Edit delay" />
+                    <ContentNode title="Save" />
+                    <ContentNode title="Cancel" />
+                </ContentNode>
+            </LabelList>
+            <Label id="settingsStatus" translation="[140,540]" width="960" height="90" wrap="true" />
+        </Group>
     </children>
-
-    <animations>
-        <Animation id="fadeAOut" duration="0.35">
-            <FloatFieldInterpolator fieldToInterp="posterA.opacity"
-                                    key="[0,1]"
-                                    keyValue="[1,0]"/>
-        </Animation>
-
-        <Animation id="fadeAIn" duration="0.35">
-            <FloatFieldInterpolator fieldToInterp="posterA.opacity"
-                                    key="[0,1]"
-                                    keyValue="[0,1]"/>
-        </Animation>
-
-        <Animation id="fadeBOut" duration="0.35">
-            <FloatFieldInterpolator fieldToInterp="posterB.opacity"
-                                    key="[0,1]"
-                                    keyValue="[1,0]"/>
-        </Animation>
-
-        <Animation id="fadeBIn" duration="0.35">
-            <FloatFieldInterpolator fieldToInterp="posterB.opacity"
-                                    key="[0,1]"
-                                    keyValue="[0,1]"/>
-        </Animation>
-    </animations>
-
 </component>

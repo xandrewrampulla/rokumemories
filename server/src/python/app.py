@@ -29,7 +29,8 @@ class PictureLibrary:
         self.picture_dir = picture_dir
         self.lock = asyncio.Lock()
         self.shuffle = []
-        self.index = 0
+        # Index of the last returned photo; -1 means none has been shown yet.
+        self.index = -1
 
     async def load(self):
         async with self.lock:
@@ -49,26 +50,25 @@ class PictureLibrary:
 
         random.shuffle(self.shuffle)
 
-        if not self.shuffle:
-            self.index = 0
-        else:
-            self.index %= len(self.shuffle)
+        self.index = -1
 
     async def next(self):
         async with self.lock:
             if not self.shuffle:
                 return None
 
-            filename = self.shuffle[self.index]
             self.index = (self.index + 1) % len(self.shuffle)
-            return filename
+            return self.shuffle[self.index]
 
     async def previous(self):
         async with self.lock:
             if not self.shuffle:
                 return None
 
-            self.index = (self.index - 1) % len(self.shuffle)
+            if self.index == -1:
+                self.index = len(self.shuffle) - 1
+            else:
+                self.index = (self.index - 1) % len(self.shuffle)
             return self.shuffle[self.index]
 
     async def delete(self, filename):

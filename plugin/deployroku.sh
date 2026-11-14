@@ -1,7 +1,12 @@
 #!/bin/bash
 
 ROKU_IP=192.168.68.102
-ROKU_PASS=123456
+ARCHIVE=${1:-build/roku.zip}
+
+if [ ! -f "$ARCHIVE" ]; then
+    echo "Package not found: $ARCHIVE" >&2
+    exit 1
+fi
 
 if [ -s .rokupassword ]; then
     ROKU_PASS=$(cat .rokupassword)
@@ -23,7 +28,7 @@ curl --digest \
      -b /tmp/cookies.txt \
      -c /tmp/cookies.txt \
      -F "mysubmit=Install" \
-     -F "archive=@build/roku.zip;type=application/zip" \
+     -F "archive=@${ARCHIVE};type=application/zip" \
      --silent --show-error \
      -o /dev/null \
      "http://$ROKU_IP/plugin_install"
