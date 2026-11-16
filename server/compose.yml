@@ -1,0 +1,19 @@
+services:
+  
+  pythonapp:
+    container_name: rokumemories
+    build:
+      context: .
+      dockerfile: src/docker/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080" 
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"    
+    volumes:
+      - /home/drew/Pictures/google/Google Photos/:/pics
+      # - ./src/test/pics:/pics
+      

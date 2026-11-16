@@ -1,0 +1,10 @@
+title=Roku Memories
+major_version=1
+minor_version=0
+build_version=00001
+mm_icon_focus_fhd=pkg:/images/iconhd.png
+mm_icon_focus_hd=pkg:/images/iconsd.png
+ui_resolutions=hd
+
+# makeroku.sh selects title for app builds or screensaver_title for screensavers.
+screensaver_title=Roku Memories

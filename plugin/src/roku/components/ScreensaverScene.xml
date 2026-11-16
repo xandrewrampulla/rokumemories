@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="ScreensaverScene" extends="Scene">
+    <interface>
+        <field id="configuration" type="assocarray" onChange="configurationChanged" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/Slideshow.brs" />
+    <script type="text/brightscript" uri="pkg:/components/ScreensaverScene.brs" />
+    <children>
+        <Rectangle width="1280" height="720" color="0x000000FF" />
+        <Poster id="posterA" width="1280" height="720" loadWidth="1280"
+                loadHeight="720" loadDisplayMode="scaleToFit" opacity="0" />
+        <Poster id="posterB" width="1280" height="720" loadWidth="1280"
+                loadHeight="720" loadDisplayMode="scaleToFit" opacity="0" />
+        <BusySpinner id="spinner" translation="[610,330]" visible="false" />
+        <Label id="status" translation="[160,260]" width="960" height="200"
+               horizAlign="center" vertAlign="center" wrap="true" />
+        <Timer id="slideTimer" repeat="false" duration="15" />
+        <Timer id="loadTimeout" repeat="false" duration="30" />
+    </children>
+</component>

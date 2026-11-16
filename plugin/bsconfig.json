@@ -1,0 +1,6 @@
+{
+    "rootDir": "src/roku",
+    "files": ["source/**/*.brs", "components/**/*.brs", "components/**/*.xml"],
+    "createPackage": false,
+    "copyToStaging": false
+}
